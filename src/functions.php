@@ -10,7 +10,7 @@
  * @return string
  */
 
-function task1(array $arrayStr, bool $return = false)
+function task1(array $arrayStr, bool $return = false): string
 {
     $result = implode("\n", array_map(fn(string $item): string => "<p>$item</p>", $arrayStr));
 
@@ -19,6 +19,8 @@ function task1(array $arrayStr, bool $return = false)
     }
 
     echo $result;
+
+    return "";
 }
 
 /*Задание #2
@@ -30,15 +32,15 @@ function task1(array $arrayStr, bool $return = false)
 /**
  * @param string $operation
  * @param ...$args
- * @return float|int|bool
+ * @return mixed
  */
-function task2(string $operation, ...$args)
+function task2(string $operation, ...$args): mixed
 {
 
     foreach ($args as $n => $arg) {
         if (!is_numeric($arg)) {
             trigger_error("argument #$n is not numeric");
-            return 'ERROR: wrong argment';
+            return 'ERROR: wrong argument';
         }
     }
 
@@ -58,7 +60,7 @@ function task2(string $operation, ...$args)
             return array_reduce($args, fn($carry, $item) => $carry / $item, $res);
 
         case '*':
-            return array_reduce($args, fn($carry, $item) => $carry * $item, 1);;
+            return array_reduce($args, fn($carry, $item) => $carry * $item, 1);
 
         default:
             echo "ERROR: unknown operation!";
@@ -97,8 +99,8 @@ function task3($n1, $n2)
 }
 
 /*Задание #4 (выполняется после просмотра модуля “ВСТРОЕННЫЕ ВОЗМОЖНОСТИ ЯЗЫКА”)
-Выведите информацию о текущей дате в формате 31.12.2016 23:59
-Выведите unixtime время соответствующее 24.02.2016 00:00:00.*/
+Выведите информацию отекущей дате в формате 31.12.2016 23:59
+Выведите unix time время соответствующее 24.02.2016 00:00:00.*/
 
 function task4()
 {
@@ -106,23 +108,39 @@ function task4()
     echo date('d.m.Y H:i') . '<br>';
     echo strtotime('24.02.2016 00:00:00');
 }
+/*Задание #5 (выполняется после просмотра модуля “ВСТРОЕННЫЕ ВОЗМОЖНОСТИ ЯЗЫКА”)
+Дана строка: “Карл у Клары украл Кораллы”. Удалить из этой строки все заглавные буквы “К”.
+Дана строка: “Две бутылки лимонада”. Заменить “Две”, на “Три”.*/
+function task5()
+{
+    $proverb = "Карл у Клары украл Кораллы";
+    echo str_replace('К', '', $proverb) . '<br>';
 
+    $lime = "Две бутылки лимонада";
+    echo str_replace('Две', 'Три', $lime);
+}
 /*Задание #6 (выполняется после просмотра модуля “ВСТРОЕННЫЕ ВОЗМОЖНОСТИ ЯЗЫКА”)
 Создайте файл test.txt средствами PHP. Поместите в него текст - “Hello again!”
 Напишите функцию, которая будет принимать имя файла, открывать файл и выводить содержимое на экран.*/
 
-function task6 (string $fname)
+/**
+ * @param string $fileName
+ * @return bool
+ */
+function task6 (string $fileName): bool
 {
-    $openfile = fopen($fname, 'r');
+    $fileResource = fopen($fileName, 'r');
 
-    if (!$openfile) {
+    if (!$fileResource) {
         return false;
     }
 
     $str = '';
-    while (!feof($openfile)) {
-        $str = fgets($openfile, 1024);
+    while (!feof($fileResource)) {
+        $str = fgets($fileResource, 1024);
     }
 
     echo $str;
+
+    return true;
 }
