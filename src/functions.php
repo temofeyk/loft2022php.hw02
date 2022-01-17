@@ -41,12 +41,6 @@ function task2(string $operation, ...$args)
             return 'ERROR: wrong argment';
         }
     }
-    if (count($args) != count(array_filter($args, function($n) {
-            if (is_int($n) or is_float($n)) return true;
-        }))) {
-        trigger_error("All arguments must be integers or decimal numbers!");
-        return false;
-    }
 
     switch ($operation) {
         case '+':
